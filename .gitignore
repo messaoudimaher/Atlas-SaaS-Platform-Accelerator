@@ -40,3 +40,8 @@ bin/
 # OS
 Thumbs.db
 .DS_Store
+
+# Documentation & Project Tracking
+*.md
+docs/
+
