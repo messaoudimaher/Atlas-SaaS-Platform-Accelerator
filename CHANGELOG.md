@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-28
+### Added
+- Completed **Phase 3: Repository Setup**.
+- Established root Gradle multi-project layout featuring Groovy DSL builds.
+- Integrated Gradle Wrapper 8.8 (downloaded jar config and added Unix/Windows scripts).
+- Initialized core shared libraries under `shared/`:
+  - `shared-kernel`: Structured `BaseException`, `TenantAccessDeniedException`, and generic `ApiResponse` envelopes.
+  - `shared-security`: Set up `TenantContext` using ThreadLocal maps.
+- Bootstrapped `gateway/api-gateway` Spring Boot service skeleton, configuring default routing paths (`/api/v1/organizations/**`, `/api/v1/subscriptions/**`) and Spring Boot Actuator settings.
+
 ## [0.2.0] - 2026-07-28
 ### Added
 - Completed **Phase 2: Architecture Design**.
