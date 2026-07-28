@@ -1,0 +1,5 @@
+dependencies {
+    // Basic web and validation annotations
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
