@@ -1,0 +1,6 @@
+apiVersion: v2
+name: atlas-service-chart
+description: A generic Helm chart template for deploying microservices in the Atlas SaaS Platform
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "atlas-service-chart.fullname" . }}
+  labels:
+    {{- include "atlas-service-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "atlas-service-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "atlas-service-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          
+          # Health probes linked to Spring Boot Actuator endpoints
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          
+          # Resource limits mapping
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          
+          # Custom Environment Variables mappings
+          env:
+            {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+            {{- end }}
+          
+          # Dynamic config/secret mapping support
+          envFrom:
+            {{- if .Values.configMapRef }}
+            - configMapRef:
+                name: {{ .Values.configMapRef }}
+            {{- end }}
+            {{- if .Values.secretRef }}
+            - secretRef:
+                name: {{ .Values.secretRef }}
+            {{- end }}
