@@ -1,0 +1,76 @@
+{
+  "id": "atlas",
+  "realm": "atlas",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "ROLE_TENANT_ADMIN",
+        "description": "Administrator of a tenant organization"
+      },
+      {
+        "name": "ROLE_TENANT_USER",
+        "description": "Standard user of a tenant organization"
+      }
+    ]
+  },
+  "groups": [],
+  "clients": [
+    {
+      "clientId": "atlas-gateway-client",
+      "name": "Atlas API Gateway Client",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "atlas_gateway_client_secret",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "protocolMappers": [
+        {
+          "name": "tenant_id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "tenant_id",
+            "claim.name": "tenant_id",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin@atlas.com",
+      "enabled": true,
+      "email": "admin@atlas.com",
+      "firstName": "System",
+      "lastName": "Admin",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin_pass",
+          "temporary": false
+        }
+      ],
+      "attributes": {
+        "tenant_id": [
+          "00000000-0000-0000-0000-000000000000"
+        ]
+      },
+      "realmRoles": [
+        "ROLE_TENANT_ADMIN"
+      ]
+    }
+  ]
+}
