@@ -44,4 +44,7 @@ Thumbs.db
 # Documentation & Project Tracking
 *.md
 docs/
+!README.md
+!AGENTS.md
+
 
