@@ -24,7 +24,8 @@ build/
 *.iml
 *.iws
 *.ipr
-out/
+/out/
+
 
 # Eclipse
 .classpath
