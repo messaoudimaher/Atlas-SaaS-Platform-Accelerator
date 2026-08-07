@@ -3,3 +3,5 @@ rootProject.name = 'atlas-saas-platform'
 include 'shared:shared-kernel'
 include 'shared:shared-security'
 include 'gateway:api-gateway'
+include 'services:organization-service'
+
