@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(':shared:shared-messaging')
+    implementation project(':shared:shared-kernel')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // Postgres Driver
+    runtimeOnly 'org.postgresql:postgresql'
+}
