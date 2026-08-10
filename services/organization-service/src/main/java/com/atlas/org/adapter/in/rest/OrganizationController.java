@@ -5,6 +5,8 @@ import com.atlas.org.domain.model.Workspace;
 import com.atlas.org.domain.port.in.OrganizationUseCase;
 import com.atlas.shared.kernel.model.ApiResponse;
 import com.atlas.shared.security.context.TenantContext;
+import com.atlas.shared.security.rbac.RequireRole;
+import com.atlas.shared.security.rbac.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/workspaces")
+    @RequireRole(Role.ADMIN)
     public ResponseEntity<ApiResponse<Workspace>> createWorkspace(
             @Valid @RequestBody CreateWorkspaceRequest request) {
         
@@ -49,6 +52,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/organizations/{id}")
+    @RequireRole(Role.MEMBER)
     public ResponseEntity<ApiResponse<Organization>> getOrganization(@PathVariable UUID id) {
         Organization organization = organizationUseCase.getOrganization(id);
         return ResponseEntity.ok(ApiResponse.success(organization));
