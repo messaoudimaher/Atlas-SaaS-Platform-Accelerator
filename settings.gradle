@@ -6,6 +6,8 @@ include 'gateway:api-gateway'
 include 'services:organization-service'
 include 'shared:shared-messaging'
 include 'services:notification-service'
+include 'shared:shared-observability'
+
 
 
 

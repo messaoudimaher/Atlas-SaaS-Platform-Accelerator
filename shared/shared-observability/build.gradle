@@ -1,0 +1,19 @@
+dependencies {
+    implementation project(':shared:shared-kernel')
+    
+    // Actuator & Prometheus Metrics
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+    api 'io.micrometer:micrometer-registry-prometheus'
+    
+    // Distributed Tracing (Micrometer Tracing + Brave / Zipkin / Tempo)
+    api 'io.micrometer:micrometer-tracing-bridge-brave'
+    api 'io.zipkin.reporter2:zipkin-reporter-brave'
+    
+    // AOP for @Timed annotation
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    
+    // Optional web dependencies for both Servlet and Reactive stacks
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.springframework.boot:spring-boot-starter-webflux'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api'
+}
