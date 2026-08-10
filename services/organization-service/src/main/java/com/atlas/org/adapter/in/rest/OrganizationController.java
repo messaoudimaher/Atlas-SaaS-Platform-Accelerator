@@ -1,5 +1,6 @@
 package com.atlas.org.adapter.in.rest;
 
+import com.atlas.org.adapter.out.metrics.OrgMetricsService;
 import com.atlas.org.domain.model.Organization;
 import com.atlas.org.domain.model.Workspace;
 import com.atlas.org.domain.port.in.OrganizationUseCase;
@@ -20,15 +21,18 @@ import java.util.UUID;
 public class OrganizationController {
 
     private final OrganizationUseCase organizationUseCase;
+    private final OrgMetricsService metricsService;
 
-    public OrganizationController(OrganizationUseCase organizationUseCase) {
+    public OrganizationController(OrganizationUseCase organizationUseCase, OrgMetricsService metricsService) {
         this.organizationUseCase = organizationUseCase;
+        this.metricsService = metricsService;
     }
 
     @PostMapping("/organizations")
     public ResponseEntity<ApiResponse<Organization>> registerOrganization(
             @Valid @RequestBody RegisterOrganizationRequest request) {
         Organization organization = organizationUseCase.registerOrganization(request.name());
+        metricsService.incrementOrgCreated();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(organization));
     }
@@ -47,6 +51,7 @@ public class OrganizationController {
 
         UUID orgId = UUID.fromString(currentTenant);
         Workspace workspace = organizationUseCase.createWorkspace(orgId, request.name());
+        metricsService.incrementWorkspaceCreated();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(workspace));
     }

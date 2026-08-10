@@ -4,7 +4,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     
-    // Shared validation rules
+    // Shared validation & observability
     implementation project(':shared:shared-kernel')
+    implementation project(':shared:shared-observability')
 }
+
 
