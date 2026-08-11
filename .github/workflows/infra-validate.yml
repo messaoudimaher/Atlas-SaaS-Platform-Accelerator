@@ -1,0 +1,55 @@
+name: Infrastructure Validation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/infra-validate.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/infra-validate.yml'
+
+jobs:
+  terraform-check:
+    name: Terraform Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.8.0'
+
+      - name: Check Terraform Formatting
+        run: terraform fmt -check infrastructure/terraform
+
+      - name: Initialize and Validate Terraform Syntax
+        run: |
+          cd infrastructure/terraform
+          terraform init -backend=false
+          terraform validate
+
+  helm-check:
+    name: Helm Chart Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.14.0'
+
+      - name: Lint Microservice Helm Chart
+        run: helm lint infrastructure/helm/atlas-service-chart
+
+      - name: Test Render Helm Templates
+        run: helm template test-release infrastructure/helm/atlas-service-chart
