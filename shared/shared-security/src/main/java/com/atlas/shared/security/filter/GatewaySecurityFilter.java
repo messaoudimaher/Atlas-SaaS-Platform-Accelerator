@@ -47,7 +47,14 @@ public class GatewaySecurityFilter implements Filter {
         }
 
         if (request instanceof HttpServletRequest httpRequest && response instanceof HttpServletResponse httpResponse) {
+            String path = httpRequest.getRequestURI();
+            if (path != null && path.startsWith("/actuator/")) {
+                chain.doFilter(request, response);
+                return;
+            }
+
             String token = httpRequest.getHeader(GATEWAY_TOKEN_HEADER);
+
 
             if (token == null || token.isBlank() || !token.equals(secret)) {
                 log.warn("Unauthorized direct request blocked: missing or invalid [{}] header (clientIp={})", 
