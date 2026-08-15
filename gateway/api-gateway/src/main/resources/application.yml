@@ -72,3 +72,7 @@ management:
   zipkin:
     tracing:
       endpoint: http://${TEMPO_HOST:localhost}:9411/api/v2/spans
+
+atlas:
+  security:
+    m2m-api-key: ${M2M_API_KEY:atl_production_secure_token_key_123}
