@@ -1,0 +1,15 @@
+{{- if .Values.quota.enabled }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: {{ include "atlas-service-chart.fullname" . }}-quota
+  labels:
+    {{- include "atlas-service-chart.labels" . | nindent 4 }}
+spec:
+  hard:
+    pods: "{{ .Values.quota.pods | default 20 }}"
+    requests.cpu: "{{ .Values.quota.requestsCpu | default "4" }}"
+    requests.memory: "{{ .Values.quota.requestsMemory | default "8Gi" }}"
+    limits.cpu: "{{ .Values.quota.limitsCpu | default "8" }}"
+    limits.memory: "{{ .Values.quota.limitsMemory | default "16Gi" }}"
+{{- end }}
