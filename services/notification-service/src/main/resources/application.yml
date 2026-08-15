@@ -1,15 +1,25 @@
 server:
   port: 8085
+  shutdown: graceful
 
 spring:
   application:
     name: notification-service
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:5432/notification_db
     username: postgres
     password: postgres_secure
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1800000
 
   jpa:
     hibernate:

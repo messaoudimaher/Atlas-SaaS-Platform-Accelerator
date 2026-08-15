@@ -1,10 +1,14 @@
 server:
   port: 8080
+  shutdown: graceful
 
 spring:
   application:
     name: api-gateway
   
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
   security:
     oauth2:
       resourceserver:
@@ -18,6 +22,9 @@ spring:
 
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 30s
       routes:
         - id: organization-service
           uri: http://${ORG_SERVICE_HOST:localhost}:8082
