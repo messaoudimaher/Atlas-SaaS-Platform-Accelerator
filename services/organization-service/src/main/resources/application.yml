@@ -63,3 +63,9 @@ resilience4j:
         waitDuration: 500ms
         enableExponentialBackoff: true
         exponentialBackoffMultiplier: 2.0
+
+atlas:
+  security:
+    gateway-token-check:
+      enabled: true
+      secret: ${GATEWAY_SECRET:atlas_gateway_secret_key}

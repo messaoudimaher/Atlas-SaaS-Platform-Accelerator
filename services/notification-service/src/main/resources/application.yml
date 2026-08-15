@@ -60,3 +60,9 @@ management:
   zipkin:
     tracing:
       endpoint: http://${TEMPO_HOST:localhost}:9411/api/v2/spans
+
+atlas:
+  security:
+    gateway-token-check:
+      enabled: true
+      secret: ${GATEWAY_SECRET:atlas_gateway_secret_key}

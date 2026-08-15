@@ -25,6 +25,8 @@ spring:
       httpclient:
         connect-timeout: 10000
         response-timeout: 30s
+      default-filters:
+        - AddRequestHeader=X-Gateway-Token, ${GATEWAY_SECRET:atlas_gateway_secret_key}
       routes:
         - id: organization-service
           uri: http://${ORG_SERVICE_HOST:localhost}:8082
