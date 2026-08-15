@@ -28,6 +28,10 @@ spring:
     show-sql: true
     open-in-view: false
 
+logging:
+  pattern:
+    level: "%5p [tenantId=%X{tenantId}, userId=%X{userId}, correlationId=%X{correlationId}, traceId=%X{traceId}, spanId=%X{spanId}]"
+
 management:
   endpoints:
     web:
@@ -56,6 +60,11 @@ resilience4j:
         automaticTransitionFromOpenToHalfOpenEnabled: true
         waitDurationInOpenState: 5000ms
         failureRateThreshold: 50
+        ignoreExceptions:
+          - com.atlas.shared.kernel.exception.BaseException
+          - com.atlas.shared.kernel.exception.TenantAccessDeniedException
+          - org.springframework.web.bind.MethodArgumentNotValidException
+          - jakarta.validation.ConstraintViolationException
   retry:
     instances:
       organizationService:

@@ -52,6 +52,10 @@ spring:
                 redis-rate-limiter.burstCapacity: 100
                 key-resolver: "#{@tenantKeyResolver}"
 
+logging:
+  pattern:
+    level: "%5p [tenantId=%X{tenantId}, userId=%X{userId}, correlationId=%X{correlationId}, traceId=%X{traceId}, spanId=%X{spanId}]"
+
 management:
   endpoints:
     web:

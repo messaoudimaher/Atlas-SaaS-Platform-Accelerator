@@ -44,6 +44,10 @@ spring:
           multiplier: 2.0
         default-requeue-rejected: false
 
+logging:
+  pattern:
+    level: "%5p [tenantId=%X{tenantId}, userId=%X{userId}, correlationId=%X{correlationId}, traceId=%X{traceId}, spanId=%X{spanId}]"
+
 management:
   endpoints:
     web:
