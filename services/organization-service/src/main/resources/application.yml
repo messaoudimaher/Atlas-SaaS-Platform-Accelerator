@@ -34,3 +34,22 @@ management:
   zipkin:
     tracing:
       endpoint: http://${TEMPO_HOST:localhost}:9411/api/v2/spans
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      organizationService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5000ms
+        failureRateThreshold: 50
+  retry:
+    instances:
+      organizationService:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2.0
